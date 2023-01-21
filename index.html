@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SignUp Form</title>
+  <style>
+
+
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h2> Registration Form </h2>
+  <form name="RegForm" onsubmit="return ValidationForm()" class="w3docs">
+    <div>
+      <label for="Name">Name:</label>
+      <input type="text" id="Name" size="60" name="Name">
+    </div>
+    <br>
+    <div>
+      <label for="E-mail">E-mail Address:</label>
+      <input type="text" id="E-mail" size="60" name="Email">
+      <span id="showing"></span>
+
+    </div>
+    <br>
+    <div>
+      <label for="Password">Password:</label>
+      <input type="text" id="psw" size="60" name="Password">
+
+    </div>
+    <br>
+    <div>
+      <label for="psw2">Confirm Password: </label>
+      <input type="text" id="psw2" size="60" name="psw2">
+    </div>
+    <br>
+    <div id="message">
+      <h3>Password must contain the following:</h3>
+      <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+      <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+      <p id="number" class="invalid">A <b>number</b></p>
+      <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+    </div>
+    <br>
+    <div class="buttons">
+      <input type="submit" value="Submit" name="Submit" onclick="auth()">
+    </div>
+
+
+  </form>
+  <script>
+    var myInput = document.getElementById("psw");
+    var letter = document.getElementById("letter");
+    var capital = document.getElementById("capital");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length");
+
+    // When the user clicks on the password field, show the message box
+    myInput.onfocus = function () {
+      document.getElementById("message").style.display = "block";
+    }
+
+    // When the user clicks outside of the password field, hide the message box
+    myInput.onblur = function () {
+      document.getElementById("message").style.display = "none";
+    }
+
+
+    function ValidationForm() {
+      var emailcheck = document.getElementById('E-mail').value;
+      var pattern = /^[A-Za-z._]{3,}@[A_Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
+      if (pattern.test(emailcheck)) {
+        document.getElementById('showing').innerHTML = "Email is correct";
+
+      } else {
+        document.getElementById('showing').innerHTML = "sorry email is not correct";
+        return false;
+      }
+
+      let username = document.forms["RegForm"]["Name"].value;
+      let email = document.forms["RegForm"]["Email"];
+      let pass = document.forms["RegForm"]["Password"].value;
+      let pass2 = document.forms["RegForm"]["psw2"].value;
+
+      if (username.length <= 2) {
+        alert("Name must be greater than 2 letter");
+        username.focus();
+        return false;
+      }
+      if (email.value == "") {
+        alert("Please enter a valid e-mail address.");
+        email.focus();
+        return false;
+      }
+      if (email.value.indexOf("@", 0) < 0) {
+        alert("Please enter a valid e-mail address.");
+        email.focus();
+        return false;
+      }
+      if (email.value.indexOf(".", 0) < 0) {
+        alert("Please enter a valid e-mail address.");
+        email.focus();
+        return false;
+      }
+
+      if (pass.value == "") {
+        alert("Please enter your password.");
+        pass.focus();
+        return false;
+      }
+      if (pass != pass2) {
+        alert("Please enter same password");
+        psw2.focus();
+        return false;
+      }
+
+      return true;
+    }
+
+
+    // When the user starts to type something inside the password field
+    myInput.onkeyup = function () {
+      // Validate lowercase letters
+      var lowerCaseLetters = /[a-z]/g;
+      if (myInput.value.match(lowerCaseLetters)) {
+        letter.classList.remove("invalid");
+        letter.classList.add("valid");
+      } else {
+        letter.classList.remove("valid");
+        letter.classList.add("invalid");
+      }
+
+      // Validate capital letters
+      var upperCaseLetters = /[A-Z]/g;
+      if (myInput.value.match(upperCaseLetters)) {
+        capital.classList.remove("invalid");
+        capital.classList.add("valid");
+      } else {
+        capital.classList.remove("valid");
+        capital.classList.add("invalid");
+      }
+
+      // Validate numbers
+      var numbers = /[0-9]/g;
+      if (myInput.value.match(numbers)) {
+        number.classList.remove("invalid");
+        number.classList.add("valid");
+      } else {
+        number.classList.remove("valid");
+        number.classList.add("invalid");
+      }
+
+      // Validate length
+      if (myInput.value.length >= 8) {
+        length.classList.remove("invalid");
+        length.classList.add("valid");
+      } else {
+        length.classList.remove("valid");
+        length.classList.add("invalid");
+      }
+    }
+
+
+    function auth() {
+      window.location="login.html";
+    }
+  </script>
+</body>
+
+</html>
